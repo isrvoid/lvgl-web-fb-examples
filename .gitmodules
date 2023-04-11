@@ -1,3 +1,6 @@
 [submodule "lvgl-wasm"]
 	path = lvgl-wasm
 	url = https://github.com/isrvoid/lvgl-wasm.git
+[submodule "web-fb"]
+	path = web-fb
+	url = https://github.com/isrvoid/web-fb.git
