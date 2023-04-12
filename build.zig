@@ -18,7 +18,8 @@ fn addOneChannelPsu(b: *std.Build) void {
     exe.addIncludePath(dir);
     exe.addCSourceFile(dir ++ "psu_emu.c", &.{});
     exe.linkLibC();
-    exe.install();
+    exe.addAnonymousModule("webfb", .{ .source_file = .{ .path = "web-fb/src/modules.zig" } });
+    b.installArtifact(exe);
 }
 
 fn addDemoWidgets(b: *std.Build) void {
