@@ -2,7 +2,7 @@ const std = @import("std");
 
 const webfb = @import("webfb");
 const Server = webfb.Server;
-const ListContent = webfb.content.DirContent; // FIXME
+const ListContent = webfb.content.ListContent;
 const c = @cImport({
     @cInclude("psu_emu.h");
 });
@@ -31,8 +31,17 @@ pub fn main() !void {
 }
 
 fn initServer() !Server {
-    server_data.cont = ListContent{ .dir = "web-fb/web-root" };
+    server_data.cont = ListContent{ .entries = getContentList() };
     return try Server.init(8080, server_data.cont.content(), &server_data.request_buf);
+}
+
+fn getContentList() []const ListContent.Entry {
+    const files = @import("web_files");
+    return &.{
+        .{ .name = "index.html", .cont = files.index, .cont_type = .html },
+        .{ .name = "webfb.js", .cont = files.webfb_js, .cont_type = .javascript },
+        .{ .name = "webfb.wasm", .cont = files.one_channel, .cont_type = .webassembly },
+    };
 }
 
 var server_data = struct {
