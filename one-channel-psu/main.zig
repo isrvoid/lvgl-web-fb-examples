@@ -15,7 +15,7 @@ export fn rand_norm() f32 {
 }
 
 export fn mono_tick_us() u32 {
-    return @truncate(u32, @bitCast(u64, std.time.microTimestamp()));
+    return @truncate(@as(u64, @bitCast(std.time.microTimestamp())));
 }
 
 pub fn main() !void {
